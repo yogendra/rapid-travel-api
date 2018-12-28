@@ -1,0 +1,10 @@
+---
+applications:
+  - name: azap-travel-insurance
+    random-route: false
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    path: ./target/travel-insurance-0.0.1-SNAPSHOT-exec.jar
+    routes:
+    - route: azap-travel-insurance.apps.pcfone.io
+
