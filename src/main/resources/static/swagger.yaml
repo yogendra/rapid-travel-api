@@ -1,0 +1,199 @@
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0.0"
+  title: "AZAP Travel Insurance"
+  termsOfService: "http://azap-travel-insurance.apps.pcfon.io/terms.html"
+  contact:
+    email: "yrampuria@pivotal.io"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "azap-travel-insurance.apps.pcfone.io"
+basePath: "/api"
+tags:
+- name: "policy"
+  description: "DailyPolicy Management"
+- name:  "product"
+  description: "Product Management"
+- name: "customer"
+  description: "Customer Management"
+schemes:
+- "https"
+produces:
+  - "application/json"
+paths:
+  /policies:
+    post:
+      tags: 
+      - "policy"
+      summary: "Apply for a new policy"
+      operationId: "applyForPolicy"
+      consumes: 
+      - "application/json"
+      produces: 
+      - "application/json"
+      parameters: 
+      - in: "body"
+        name: "policy"
+        description: "DailyPolicy details"
+        required: true
+        schema:
+          $ref: "#/definitions/Policy"
+      responses:
+        200:
+          description: "Update policy details"
+          schema:
+            $ref: "#/definitions/Policy"
+        400: 
+          description: "Error in creating policy creation"
+          schema:
+            $ref: "#/definitions/Error"
+    get:
+      tags: 
+      - "policy"
+      summary: "Search for a customer's policies "
+      operationId: "searchPolicies"
+      consumes: 
+      - "application/json"
+      produces: 
+      - "application/json"
+      parameters: 
+      - in: "body"
+        name: "policy"
+        description: "DailyPolicy details"
+        required: true
+        schema:
+          $ref: "#/definitions/Policy"
+      responses:
+        200:
+          description: "List of policies"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Policy"
+        400:
+          description: "Error in searching policies"
+          schema:
+            $ref: "#/definitions/Error"
+  /policies/{id}:
+    get:
+      tags:
+      - "policy"
+      summary: "Get a policy details"
+      operationId: "getPolicy"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "DailyPolicy ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "DailyPolicy details"
+          schema:
+            $ref: "#/definitions/Policy"
+        404:
+          description: "DailyPolicy not found"
+          schema:
+            $ref: "#/definitions/Error"
+  /customers:
+    get:
+      tags:
+      - "customer"
+      summary: "Customer search"
+      operationId: "searchCustomer"
+      responses:
+        200: 
+          description: "Customer list"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Customer"
+        400:
+          description: "Error in searching customer"
+          schema:
+            $ref: "#/definitions/Error"
+  /customers/{id}:
+    get:
+      tags:
+      - "customer"
+      summary: "Customer details"
+      operationId: "getCustomer"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "DailyPolicy ID"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Customer details"
+          schema:
+            $ref: "#/definitions/Customer"
+        404:
+          description: "Customer not found"
+          schema:
+            $ref: "#/definitions/Error"
+  /products:
+    get:
+      tags:
+      - "product"
+      summary: "Product search and listing"
+      operationId: "searchProduct"
+      responses:
+        200:
+          description: "Product listing"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#/definitions/Product"
+        404:
+          description: "No Products found"
+          schema:
+            $ref: "#/definitions/Error"
+definitions:
+  Policy:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+  Customer:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+  Product:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      premium: 
+        $ref: "#/definitions/Amount"
+  Amount:
+    type: "object"
+    properties:
+      currency:
+        type: "string"
+      amount: 
+        type: "string"
+  FieldError:
+    type: "object"
+    properties:
+      path:
+        type: "string"
+      message: 
+        type: "string"
+      code:
+        type: "string"
+  Error:
+    type: "object"
+    properties:
+      fieldErrors:
+        type: "array"
+        items: 
+          $ref: "#/definitions/FieldError"
+      message:
+        type: "string"
+      code: 
+        type: "string"

@@ -6,6 +6,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+  jackson:
+    property-naming-strategy: KEBAB_CASE
+  data:
+    rest:
+      base-path: /data-api
 
 management:
   endpoint:
