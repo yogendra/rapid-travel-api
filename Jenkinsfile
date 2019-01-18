@@ -14,7 +14,7 @@ Promote to Production
 
 node {
     stage 'Clone the project'
-    git 'https://github.com/eugenp/tutorials.git'
+    git 'https://github.com/yogendra/rapid-travel-api.git'
 
     dir('spring-jenkins-pipeline') {
         stage("Compilation and Analysis") {
