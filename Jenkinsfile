@@ -11,7 +11,7 @@ Security Scan
 Publish to Nexus
 Promote to Production
 */
- 
+
 node {
     stage 'Clone the project'
     git 'https://github.com/eugenp/tutorials.git'

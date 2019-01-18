@@ -1,6 +1,8 @@
 package io.pivotal.azap.ti.api;
 
 
+import static io.pivotal.azap.ti.api.FieldError.root;
+
 public class ApiException extends RuntimeException{
 
   private Error error;
@@ -22,5 +24,9 @@ public class ApiException extends RuntimeException{
 
   public Error getError() {
     return error;
+  }
+
+  public static ApiException invalidRequest(String message){
+    return new ApiException(Error.validationError( root(message)));
   }
 }

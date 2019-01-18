@@ -4,11 +4,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import io.pivotal.azap.ti.db.Customer;
-import io.pivotal.azap.ti.db.DailyPolicy;
-import lombok.Setter;
 import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.MapperFactory;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,10 +53,6 @@ public class MappingTests {
     String phoneNumber = "phone-number-here";
     String name = "name here";
 
-    DailyPolicy dailyPolicy = DailyPolicy.builder()
-        .id(id)
-        .name(name)
-        .build();
 
 
     Customer dbCustomer = Customer.builder()

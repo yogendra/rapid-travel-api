@@ -1,27 +1,45 @@
 package io.pivotal.azap.ti.api;
 
-import io.pivotal.azap.ti.db.ProductRepository;
+import static java.util.stream.Collectors.toList;
+
+import io.pivotal.azap.ti.api.Product.ProductType;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductApi {
-  private ProductRepository products;
+
+  List<Product> products;
 
   @Autowired
-  public ProductApi(ProductRepository products) {
+  public ProductApi(List<Product> products) {
     this.products = products;
   }
 
-  @GetMapping("/{id}")
-  public Product get(@PathVariable("id") Long id){
-    return Product.builder().id(id).build();
+
+  @GetMapping("/{code}")
+  public Optional<Product> get(@PathVariable("code") String code) {
+    return products.stream().filter(x -> x.getCode().equals(code)).findFirst();
   }
+
+  @GetMapping({"/", ""})
+  public List<Product> getAll() {
+    return products;
+  }
+
+  @GetMapping(value = {"","/"},
+      params = {"type"})
+  public List<Product> getAllByType(@RequestParam("type") String type) {
+    ProductType requiredType = ProductType.valueOf(type.toUpperCase());
+    return products.stream().filter(x -> x.getType() == requiredType).collect(toList());
+  }
+
 
 }

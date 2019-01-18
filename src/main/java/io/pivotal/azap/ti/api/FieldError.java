@@ -14,4 +14,8 @@ public class FieldError {
   private String message;
   private String code;
 
+  public static FieldError root(String message){
+    return new FieldError("/", message, "root-object-error");
+  }
+
 }
