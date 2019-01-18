@@ -38,7 +38,7 @@ public class Product {
   @NonNull
   private PremiumFrequency premiumType;
   @NonNull
-  private Amount premiumAmount;
+  private Amount premium;
 
   @NonNull
   private Amount coverage;

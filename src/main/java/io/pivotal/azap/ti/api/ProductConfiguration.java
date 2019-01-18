@@ -22,7 +22,7 @@ public class ProductConfiguration {
         .description("Worldwide Travel Insurance provides you with protection anywhere, anytime.")
         .type(TRAVEL)
         .premiumType(ONE_TIME)
-        .premiumAmount(USD(20.00))
+        .premium(USD(20.00))
         .coverage(USD(10000))
         .build();
   }
@@ -31,13 +31,28 @@ public class ProductConfiguration {
   public Product weeklySkiInsurance() {
     return Product.builder()
         .code("WSKI001")
-        .name("Weekly SKU Insurance")
+        .name("Weekly SKI Insurance")
         .description("Weekly insurance for skiing anywhere in the world")
         .type(SPORT_SKI)
         .premiumType(ONE_TIME)
-        .premiumAmount(USD(50.00))
+        .premium(USD(50.00))
         .coverage(USD(20000.00))
         .build();
   }
+//
+//  @Bean
+//  public Product dailySkiInsurance() {
+//    return Product.builder()
+//        .code("WSKI002")
+//        .name("Daily SKI Insurance")
+//        .description("Daily insurance for skiing anywhere in the world")
+//        .type(SPORT_SKI)
+//        .premiumType(ONE_TIME)
+//        .premium(USD(12.00))
+//        .coverage(USD(2000.00))
+//        .build();
+//  }
+//
+
 
 }
