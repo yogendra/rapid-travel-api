@@ -5,7 +5,7 @@ node {
          checkout scm
     }
     stage('Build'){
-        sh './mvnw compile'
+        sh './mvnw clean compile'
     }
     stage('Code Quality Check'){
         withSonarQubeEnv {
@@ -14,22 +14,45 @@ node {
     }
     stage('Test : Unit'){
         sh './mvnw test'
+        junit '**/target/surefire-reports/TEST-*.xml'
     }
     stage('Deploy Test Env'){
+        sh './mvnw -DskipTests package install'
+        pushToCloudFoundry(
+            target: 'api.run.pcfone.io'
+            organization: 'pivot-yrampuria',
+            cloudSpace: 'Testing',
+            credentialsId: 'pcf-pcfone',
+            manifestChoice: [manifestFile: 'manifest-pcfone-testing.yml']
+        )
         echo 'cf login -a api.run.pcfone.io'
         echo 'cf push '
     }
     stage('Test : Integration'){
-        echo './mvnw verify'
+        sh './mvnw verify'
     }
     stage('Publish'){
-        echo './mvnw publish'
+        echo './mvnw package publish'
     }
     stage('Deploy to Prod (On Prem)'){
+        pushToCloudFoundry(
+            target: 'api.run.pcfone.io'
+            organization: 'pivot-yrampuria',
+            cloudSpace: 'Production',
+            credentialsId: 'pcf-pcfone'
+            manifestChoice: [manifestFile: 'manifest-pcfone.yml']
+        )
         echo 'cf login -a api.run.pcfone.io'
         echo 'cf push '        
     }
     stage('Deploy to Prod (Cloud)'){
+        pushToCloudFoundry(
+            target: 'api.run.pivotal.io'
+            organization: 'yrampuria',
+            cloudSpace: 'Production',
+            credentialsId: 'pcf-pws',
+            manifestChoice: [manifestFile: 'manifest-pws.yml']
+        )
         echo 'cf login -a api.run.pivotal.io'
         echo 'cf push '
         
