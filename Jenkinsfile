@@ -39,7 +39,7 @@ node {
             target: 'api.run.pcfone.io',
             organization: 'pivot-yrampuria',
             cloudSpace: 'Production',
-            credentialsId: 'pcf-pcfone'
+            credentialsId: 'pcf-pcfone',
             manifestChoice: [manifestFile: 'manifest-pcfone.yml']
         )
         echo 'cf login -a api.run.pcfone.io'
