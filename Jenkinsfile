@@ -8,7 +8,9 @@ node {
         sh './mvnw compile'
     }
     stage('Code Quality Check'){
-        sh './mvnw sonar:sonar '
+        withSonarQubeEnv {
+            sh './mvnw sonar:sonar -Dsonar.host.url=$SONAR_HOST_URL -Dsonar.login=$SONAR_AUTH_TOKEN '
+        }
     }
     stage('Test : Unit'){
         sh './mvnw test'
