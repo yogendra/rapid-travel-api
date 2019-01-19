@@ -1,77 +1,35 @@
 
-/*
-BUild
-Code Quality
-Test:Unit
-Deploy to Test
-Test:E2E
-Test:Performance
-Test:Integration
-Security Scan
-Publish to Nexus
-Promote to Production
-*/
-
 node {
-    stage 'Clone the project'
-    git 'https://github.com/yogendra/rapid-travel-api.git'
-
-    dir('spring-jenkins-pipeline') {
-        stage("Compilation and Analysis") {
-            parallel 'Compilation': {
-                sh "./mvnw clean install -DskipTests"
-            }, 'Static Analysis': {
-                stage("Checkstyle") {
-                    sh "./mvnw checkstyle:checkstyle"
-
-                    step([$class: 'CheckStylePublisher',
-                      canRunOnFailed: true,
-                      defaultEncoding: '',
-                      healthy: '100',
-                      pattern: '**/target/checkstyle-result.xml',
-                      unHealthy: '90',
-                      useStableBuildAsReference: true
-                    ])
-                }
-            }
-        }
-
-        stage("Tests and Deployment") {
-            parallel 'Unit tests': {
-                stage("Runing unit tests") {
-                    try {
-                        sh "./mvnw test -Punit"
-                    } catch(err) {
-                        step([$class: 'JUnitResultArchiver', testResults:
-                          '**/target/surefire-reports/TEST-*UnitTest.xml'])
-                        throw err
-                    }
-                   step([$class: 'JUnitResultArchiver', testResults:
-                     '**/target/surefire-reports/TEST-*UnitTest.xml'])
-                }
-            }, 'Integration tests': {
-                stage("Runing integration tests") {
-                    try {
-                        sh "./mvnw test -Pintegration"
-                    } catch(err) {
-                        step([$class: 'JUnitResultArchiver', testResults:
-                          '**/target/surefire-reports/TEST-'
-                            + '*IntegrationTest.xml'])
-                        throw err
-                    }
-                    step([$class: 'JUnitResultArchiver', testResults:
-                      '**/target/surefire-reports/TEST-'
-                        + '*IntegrationTest.xml'])
-                }
-            }
-
-            stage("Staging") {
-                sh "pid=\$(lsof -i:8989 -t); kill -TERM \$pid "
-                  + "|| kill -KILL \$pid"
-                withEnv(['JENKINS_NODE_COOKIE=dontkill']) {
-                    sh 'nohup ./mvnw spring-boot:run -Dserver.port=8989 &'
-                }
-            }
-        }
+    git url: 'https://github.com/yogendra/rapid-travel-api.git'
+    stage('Checkout'){
+         checkout scm
+    }
+    stage('Build'){
+        sh './mvnw compile'
+    }
+    stage('Code Quality Check'){
+        sh './mvnw sonar:sonar '
+    }
+    stage('Test : Unit'){
+        sh './mvnw test'
+    }
+    stage('Deploy Test Env'){
+        echo 'cf login -a api.run.pcfone.io'
+        echo 'cf push '
+    }
+    stage('Test : Integration'){
+        echo './mvnw verify'
+    }
+    stage('Publish'){
+        echo './mvnw publish'
+    }
+    stage('Deploy to Prod (On Prem)'){
+        echo 'cf login -a api.run.pcfone.io'
+        echo 'cf push '        
+    }
+    stage('Deploy to Prod (Cloud)'){
+        echo 'cf login -a api.run.pivotal.io'
+        echo 'cf push '
+        
     }
 }
