@@ -19,7 +19,7 @@ node {
     stage('Deploy Test Env'){
         sh './mvnw -DskipTests package install'
         pushToCloudFoundry(
-            target: 'api.run.pcfone.io'
+            target: 'api.run.pcfone.io',
             organization: 'pivot-yrampuria',
             cloudSpace: 'Testing',
             credentialsId: 'pcf-pcfone',
@@ -36,7 +36,7 @@ node {
     }
     stage('Deploy to Prod (On Prem)'){
         pushToCloudFoundry(
-            target: 'api.run.pcfone.io'
+            target: 'api.run.pcfone.io',
             organization: 'pivot-yrampuria',
             cloudSpace: 'Production',
             credentialsId: 'pcf-pcfone'
@@ -47,7 +47,7 @@ node {
     }
     stage('Deploy to Prod (Cloud)'){
         pushToCloudFoundry(
-            target: 'api.run.pivotal.io'
+            target: 'api.run.pivotal.io',
             organization: 'yrampuria',
             cloudSpace: 'Production',
             credentialsId: 'pcf-pws',
