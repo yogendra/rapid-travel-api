@@ -17,13 +17,13 @@ node {
         junit '**/target/surefire-reports/TEST-*.xml'
     }
     stage('Deploy Test Env'){
-        sh './mvnw -DskipTests package install'
+        sh './mvnw -DskipTests package deploy'
         pushToCloudFoundry(
             target: 'api.run.pcfone.io',
             organization: 'pivot-yrampuria',
             cloudSpace: 'Testing',
             credentialsId: 'pcf-pcfone',
-            manifestChoice: [manifestFile: 'manifest-pcfone-testing.yml']
+            manifestChoice: [manifestFile: 'manifest-pcfone-testing.yaml']
         )
         echo 'cf login -a api.run.pcfone.io'
         echo 'cf push '
@@ -32,7 +32,7 @@ node {
         sh './mvnw verify'
     }
     stage('Publish'){
-        echo './mvnw package publish'
+        echo './mvnw -DskipTests deploy'
     }
     stage('Deploy to Prod (On Prem)'){
         pushToCloudFoundry(
@@ -40,7 +40,7 @@ node {
             organization: 'pivot-yrampuria',
             cloudSpace: 'Production',
             credentialsId: 'pcf-pcfone',
-            manifestChoice: [manifestFile: 'manifest-pcfone.yml']
+            manifestChoice: [manifestFile: 'manifest-pcfone.yaml']
         )
         echo 'cf login -a api.run.pcfone.io'
         echo 'cf push '        
@@ -51,7 +51,7 @@ node {
             organization: 'yrampuria',
             cloudSpace: 'Production',
             credentialsId: 'pcf-pws',
-            manifestChoice: [manifestFile: 'manifest-pws.yml']
+            manifestChoice: [manifestFile: 'manifest-pws.yaml']
         )
         echo 'cf login -a api.run.pivotal.io'
         echo 'cf push '
