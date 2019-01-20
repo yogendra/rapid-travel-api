@@ -1,11 +1,10 @@
-
 node {
     git url: 'https://github.com/yogendra/rapid-travel-api.git'
     stage('Checkout'){
          checkout scm
     }
     stage('Build'){
-        sh './mvnw clean compile'
+        sh './mvnw -X clean compile'
     }
     stage('Code Quality Check'){
         withSonarQubeEnv {
