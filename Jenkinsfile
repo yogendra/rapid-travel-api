@@ -24,7 +24,7 @@ node {
 
         withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
             sh 'cf login -a api.run.pcfone.io -u $CF_USER -p $CF_PASSWORD -s Testing'
-            sh 'cf push -f manifest-pcfone-testing.yaml api-rapid-test'
+            sh 'cf push api-rapid-test -f manifest-pcfone-testing.yaml'
         }
     }
     stage('Test : Integration'){
@@ -37,13 +37,13 @@ node {
 
         withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
             sh 'cf login -a api.run.pcfone.io -u $CF_USER -p $CF_PASSWORD -s Production'
-            sh 'cf blue-green-deploy api-rapid -f manifest-pcfone.yaml'
+            sh 'cf push api-rapid -f manifest-pcfone.yaml'
         }
     }
     stage('Deploy to Prod (Cloud)'){
         withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
             sh 'cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASSWORD -s Production'
-            sh 'cf blue-green-deploy api-rapid -f manifest-pws.yaml'
+            sh 'cf push api-rapid -f manifest-pws.yaml'
         }
 
     }
