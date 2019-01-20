@@ -38,6 +38,7 @@ public class ProductConfiguration {
         .build();
   }
 
+  @Bean
   public Product hourlySkiProduct() {
     return Product.builder()
         .code("HSKI001")
