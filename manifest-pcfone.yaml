@@ -10,3 +10,21 @@ applications:
       - java_buildpack_offline
     routes:
       - route: api-rapid.apps.pcfone.io
+  - name: api-rapid-test
+    random-route: false
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    path: ./target/travel-insurance-0.0.1-SNAPSHOT-exec.jar
+    stack: cflinuxfs3
+    buildpacks:
+      - java_buildpack_offline
+    routes:
+      - route: api-rapid-test.apps.pcfone.io
+  - name: api-rapid-dev
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    path: ./target/travel-insurance-0.0.1-SNAPSHOT-exec.jar
+    stack: cflinuxfs3
+    buildpacks:
+      - java_buildpack_offline
+    random-route: true
