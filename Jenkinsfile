@@ -20,7 +20,7 @@ node {
     }
 
     stage('Deploy Test Env'){
-        sh './mvnw -DskipTests package deploy'
+        sh './mvnw -DskipTests package'
 
         withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
             sh 'cf login -a api.run.pcfone.io -u $CF_USER -p $CF_PASSWORD -s Testing'
@@ -36,13 +36,13 @@ node {
     stage('Deploy to Prod (On Prem)'){
 
         withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
-            sh 'cf login -a api.run.pcfone.io -u $CF_USER -p $CF_PASSWORD -s Production'
+            sh 'cf login -a api.run.pcfone.io -u '$CF_USER' -p '$CF_PASSWORD' -s Production'
             sh 'cf push api-rapid -f manifest-pcfone.yaml'
         }
     }
     stage('Deploy to Prod (Cloud)'){
         withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
-            sh 'cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASSWORD -s Production'
+            sh 'cf login -a api.run.pivotal.io -u '$CF_USER' -p '$CF_PASSWORD' -s Production'
             sh 'cf push api-rapid -f manifest-pws.yaml'
         }
 
