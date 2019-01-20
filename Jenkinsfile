@@ -24,7 +24,7 @@ node {
 
         withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
             sh 'cf login -a api.run.pcfone.io -u $CF_USER -p $CF_PASSWORD -s Testing'
-            sh 'cf blue-green-deploy api-rapid-test -f manifest-pcfone-testing.yaml'
+            sh 'cf push -f manifest-pcfone-testing.yaml api-rapid-test'
         }
     }
     stage('Test : Integration'){
