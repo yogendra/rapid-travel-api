@@ -2,11 +2,9 @@ package io.pivotal.azap.ti.api;
 
 import static io.pivotal.azap.ti.Amount.USD;
 import static io.pivotal.azap.ti.PremiumFrequency.ONE_TIME;
-import static io.pivotal.azap.ti.api.Product.PolicyParameter.requiredNumber;
 import static io.pivotal.azap.ti.api.Product.ProductType.SPORT_SKI;
 import static io.pivotal.azap.ti.api.Product.ProductType.TRAVEL;
 
-import io.pivotal.azap.ti.PremiumFrequency;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -39,20 +37,19 @@ public class ProductConfiguration {
         .coverage(USD(20000.00))
         .build();
   }
-//
-//  @Bean
-//  public Product dailySkiInsurance() {
-//    return Product.builder()
-//        .code("WSKI002")
-//        .name("Daily SKI Insurance")
-//        .description("Daily insurance for skiing anywhere in the world")
-//        .type(SPORT_SKI)
-//        .premiumType(ONE_TIME)
-//        .premium(USD(12.00))
-//        .coverage(USD(2000.00))
-//        .build();
-//  }
-//
+
+  public Product hourlySkiProduct() {
+    return Product.builder()
+        .code("HSKI001")
+        .name("Hourly Ski Policy ")
+        .description("Gives you coverage by hour")
+        .type(SPORT_SKI)
+        .premiumType(ONE_TIME)
+        .premium(USD(10.00))
+        .coverage(USD(100.00))
+        .build();
+  }
+
 
 
 }
