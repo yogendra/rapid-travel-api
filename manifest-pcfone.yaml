@@ -12,7 +12,7 @@ applications:
       - route: api-rapid.apps.pcfone.io
     services:
       - metric-forwarder-Production
-      - autoscaler-Production
+      - autoscale-Production
   - name: api-rapid-test
     random-route: false
     health-check-type: http
