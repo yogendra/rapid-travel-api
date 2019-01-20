@@ -4,5 +4,7 @@ applications:
     health-check-type: http
     health-check-http-endpoint: /actuator/health
     path: ./target/travel-insurance-0.0.1-SNAPSHOT-exec.jar
+    buildpacks:
+      - java_buildpack
     routes:
       - route: api-rapid-test.cfapps.io
