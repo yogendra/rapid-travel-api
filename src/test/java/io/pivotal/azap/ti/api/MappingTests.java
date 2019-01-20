@@ -5,21 +5,26 @@ import static org.junit.Assert.*;
 
 import io.pivotal.azap.ti.db.Customer;
 import ma.glasnost.orika.MapperFacade;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
+import ma.glasnost.orika.impl.DefaultMapperFactory.MapperFactoryBuilder;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
+
 public class MappingTests {
 
-
-  @Autowired
   private MapperFacade mapperFacade;
 
-
+  @Before
+  public void setUp(){
+    MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
+    this.mapperFacade = mapperFactory.getMapperFacade();
+  }
   @Test
   public void mapCustomerFromDbToApi() {
 

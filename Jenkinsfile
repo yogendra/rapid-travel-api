@@ -15,8 +15,13 @@ node {
         sh './mvnw test'
         junit '**/target/surefire-reports/TEST-*.xml'
     }
+    stage('Scan for Vulnerability'){
+      sleep 3
+    }
+
     stage('Deploy Test Env'){
         sh './mvnw -DskipTests package deploy'
+
         pushToCloudFoundry(
             target: 'api.run.pcfone.io',
             organization: 'pivot-yrampuria',
@@ -24,8 +29,10 @@ node {
             credentialsId: 'pcf-pcfone',
             manifestChoice: [manifestFile: 'manifest-pcfone-testing.yaml']
         )
-        echo 'cf login -a api.run.pcfone.io'
-        echo 'cf push '
+        withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
+            sh 'cf login -a api.run.pcfone.io -u $CF_USER -p $CF_PASSWORD -s Testing'
+            sh 'cf blue-green-deploy api-rapid-test -f manifest-pcfone-testing.yaml'
+        }
     }
     stage('Test : Integration'){
         sh './mvnw verify'
@@ -34,26 +41,17 @@ node {
         echo './mvnw -DskipTests deploy'
     }
     stage('Deploy to Prod (On Prem)'){
-        pushToCloudFoundry(
-            target: 'api.run.pcfone.io',
-            organization: 'pivot-yrampuria',
-            cloudSpace: 'Production',
-            credentialsId: 'pcf-pcfone',
-            manifestChoice: [manifestFile: 'manifest-pcfone.yaml']
-        )
-        echo 'cf login -a api.run.pcfone.io'
-        echo 'cf push '        
+
+        withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
+            sh 'cf login -a api.run.pcfone.io -u $CF_USER -p $CF_PASSWORD -s Production'
+            sh 'cf blue-green-deploy api-rapid -f manifest-pcfone.yaml'
+        }
     }
     stage('Deploy to Prod (Cloud)'){
-        pushToCloudFoundry(
-            target: 'api.run.pivotal.io',
-            organization: 'yrampuria',
-            cloudSpace: 'Production',
-            credentialsId: 'pcf-pws',
-            manifestChoice: [manifestFile: 'manifest-pws.yaml']
-        )
-        echo 'cf login -a api.run.pivotal.io'
-        echo 'cf push '
-        
+        withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
+            sh 'cf login -a api.run.pivotal.io -u $CF_USER -p $CF_PASSWORD -s Production'
+            sh 'cf blue-green-deploy api-rapid -f manifest-pws.yaml'
+        }
+
     }
 }
