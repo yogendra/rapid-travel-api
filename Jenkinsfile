@@ -15,7 +15,7 @@ node {
         sh './mvnw test'
         junit '**/target/surefire-reports/TEST-*.xml'
     }
-    stage('Scan for Vulnerability'){
+    stage('Security Vulnerability Scan '){
       sleep 3
     }
 

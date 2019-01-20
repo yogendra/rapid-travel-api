@@ -38,4 +38,19 @@ public class ProductConfiguration {
         .build();
   }
 
+
+  @Bean
+  public Product hourlySkiProduct() {
+    return Product.builder()
+        .code("HSKI001")
+        .name("Hourly Ski Policy ")
+        .description("Gives you coverage by hour")
+        .type(SPORT_SKI)
+        .premiumType(ONE_TIME)
+        .premium(USD(100.00))
+        .coverage(USD(5000.00))
+        .build();
+  }
+
+
 }
