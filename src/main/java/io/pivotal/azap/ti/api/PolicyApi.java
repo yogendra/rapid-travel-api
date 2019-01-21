@@ -8,10 +8,7 @@ import io.pivotal.azap.ti.db.Customer;
 import io.pivotal.azap.ti.db.CustomerRepository;
 import io.pivotal.azap.ti.db.PolicyContract;
 import io.pivotal.azap.ti.db.PolicyContractRepository;
-import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +33,7 @@ public class PolicyApi {
   private CustomerRepository customers;
   private List<Product> products;
 
+
   @Autowired
   public PolicyApi(MapperFacade mapperFacade,
       PolicyContractRepository policyContractRepository,
@@ -49,6 +47,7 @@ public class PolicyApi {
 
   @GetMapping("/{id}")
   public Policy get(@PathVariable("id") Long id) {
+
     return contracts.findById(id).map(x -> {
       return Policy.builder()
           .id(id)
@@ -68,11 +67,11 @@ public class PolicyApi {
 
     }).orElse(null);
 
-
   }
 
   private Product getProduct(String productCode) {
-    return this.products.stream().filter(x -> x.getCode().equalsIgnoreCase(productCode)).findFirst().orElse(null);
+    return this.products.stream().filter(x -> x.getCode().equalsIgnoreCase(productCode)).findFirst()
+        .orElse(null);
   }
 
   @GetMapping(value = "/", params = {"customer"})
@@ -81,17 +80,18 @@ public class PolicyApi {
   }
 
 
-
   @PostMapping({"", "/"})
   public Policy buy(@RequestBody Policy policy) {
 
     if (isValidProposal(policy)) {
       return issuePolicy(policy);
     }
-    String message = String.format("Failed to validate policy issuance. TxN Ref: %s", UUID.randomUUID());
+    String message = String
+        .format("Failed to validate policy issuance. TxN Ref: %s", UUID.randomUUID());
     log.warn("User Message: {}, Policy: {}", message, policy);
     throw invalidRequest(message);
   }
+
   private boolean isValidProposal(Policy policy) {
 
     boolean valid = true;
@@ -105,7 +105,7 @@ public class PolicyApi {
   }
 
   private boolean isValidProduct(String productCode) {
-    return products.stream().map( Product::getCode ).anyMatch(productCode::equalsIgnoreCase);
+    return products.stream().map(Product::getCode).anyMatch(productCode::equalsIgnoreCase);
   }
 
 
@@ -131,7 +131,6 @@ public class PolicyApi {
     policy.setStatus(APPROVED);
     return policy;
   }
-
 
 
   private Customer findOrSaveCustomer(Policy policy) {

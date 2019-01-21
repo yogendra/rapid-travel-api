@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ProductApi {
 
-  List<Product> products;
+  private List<Product> products;
+
 
   @Autowired
   public ProductApi(List<Product> products) {
     this.products = products;
   }
-
 
   @GetMapping("/{code}")
   public Optional<Product> get(@PathVariable("code") String code) {
@@ -34,6 +34,7 @@ public class ProductApi {
   @GetMapping({"/", ""})
   public List<Product> getAll() {
     log.info("Received request for all insurance products");
+
     return products;
   }
 
