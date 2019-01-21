@@ -33,24 +33,21 @@ public class ProductConfiguration {
         .description("Weekly insurance for skiing anywhere in the world")
         .type(SPORT_SKI)
         .premiumType(ONE_TIME)
-        .premium(USD(50.00))
-        .coverage(USD(20000.00))
+        .premium(USD(200.00))
+        .coverage(USD(10000.00))
         .build();
   }
 
-
   @Bean
-  public Product hourlySkiProduct() {
+  public Product hourlySkiInsurance() {
     return Product.builder()
         .code("HSKI001")
-        .name("Hourly Ski Policy ")
-        .description("Gives you coverage by hour")
+        .name("Hourly SKI Insurance")
+        .description("Hourly insurance for skiing anywhere in the world")
         .type(SPORT_SKI)
         .premiumType(ONE_TIME)
-        .premium(USD(100.00))
+        .premium(USD(10.00))
         .coverage(USD(5000.00))
         .build();
   }
-
-
 }
