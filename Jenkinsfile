@@ -12,7 +12,7 @@ node {
         }
     }
     stage('Test : Unit'){
-        sh './mvnw test'
+        sh './mvnw test package'
         junit '**/target/surefire-reports/TEST-*.xml'
     }
     stage('Security Vulnerability Scan '){
@@ -20,7 +20,7 @@ node {
     }
 
     stage('Deploy Test Env'){
-        sh './mvnw -DskipTests package'
+        sleep 2
 
         /*
         withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
@@ -31,7 +31,11 @@ node {
 
     }
     stage('Test : Integration'){
-        sh './mvnw verify'
+        /*
+          sh './mvnw verify'
+        */
+
+        sleep 2
     }
     stage('Publish'){
         echo './mvnw -DskipTests deploy'
