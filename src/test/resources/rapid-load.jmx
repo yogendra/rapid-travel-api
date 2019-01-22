@@ -204,19 +204,19 @@
           </elementProp>
           <elementProp name="USER_COUNT" elementType="Argument">
             <stringProp name="Argument.name">USER_COUNT</stringProp>
-            <stringProp name="Argument.value">${__P(users,10)}</stringProp>
+            <stringProp name="Argument.value">${__P(users,2000)}</stringProp>
             <stringProp name="Argument.desc">No. of user to simulate</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="RAMP_UP_SEC" elementType="Argument">
             <stringProp name="Argument.name">RAMP_UP_SEC</stringProp>
-            <stringProp name="Argument.value">${__P(rampup,1)}</stringProp>
+            <stringProp name="Argument.value">${__P(rampup,20)}</stringProp>
             <stringProp name="Argument.desc">Seconds to ramp up to users</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="ITERATIONS" elementType="Argument">
             <stringProp name="Argument.name">ITERATIONS</stringProp>
-            <stringProp name="Argument.value">${__P(iteration,1)}</stringProp>
+            <stringProp name="Argument.value">${__P(iteration,100)}</stringProp>
             <stringProp name="Argument.desc">No. of Iterations</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
