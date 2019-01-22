@@ -16,8 +16,9 @@ public class ProductConfiguration {
   public Product travelInsurance() {
     return Product.builder()
         .code("TRVL001")
-        .name("Travel Insurance Worldwide")
-        .description("Worldwide Travel Insurance provides you with protection anywhere, anytime.")
+        .name("Travel Insurance Worldwide by RapidInsure")
+        .description(
+            "Worldwide Travel Insurance provides you with protection anywhere, anytime. Offered by RapidInsure, worldwide!")
         .type(TRAVEL)
         .premiumType(ONE_TIME)
         .premium(USD(20.00))
@@ -30,8 +31,9 @@ public class ProductConfiguration {
   public Product weeklySkiInsurance() {
     return Product.builder()
         .code("WSKI001")
-        .name("Weekly SKI Insurance")
-        .description("Weekly insurance for skiing anywhere in the world")
+        .name("Weekly SKI Insurance by RapidInsure")
+        .description(
+            "Weekly insurance for skiing anywhere in the world. Offered by RapidInsure, worldwide!")
         .type(SPORT_SKI)
         .premiumType(ONE_TIME)
         .premium(USD(250.00))
