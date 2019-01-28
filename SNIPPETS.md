@@ -1,5 +1,7 @@
 # Code Snippets
 
+Sample code snippets
+
 ## Add a new policy
 
 ```java
