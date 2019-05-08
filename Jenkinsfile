@@ -4,7 +4,7 @@ node {
          checkout scm
     }
     stage('Build'){
-        sh './mvnw -X clean compile'
+        sh './mvnw clean compile'
     }
     stage('Code Quality Check'){
         withSonarQubeEnv {
