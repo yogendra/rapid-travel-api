@@ -1,6 +1,6 @@
 ---
 applications:
-  - name: api-rapid
+  - name: api-rapid-test
     random-route: false
     health-check-type: http
     health-check-http-endpoint: /actuator/health
