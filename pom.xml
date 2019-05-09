@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.pivotal.azap</groupId>
 	<artifactId>travel-insurance</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>travel-insurance</name>
 	<description>Travel Insurance Demo</description>
 
@@ -154,7 +154,7 @@
 	<scm>
 		<url>https://github.com/yogendra/rapid-travel-api</url>
 		<connection>scm:git:https://github.com/yogendra/rapid-travel-api.git</connection>
-	  <tag>travel-insurance-1.0.0</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<repositories>
