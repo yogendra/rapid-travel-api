@@ -4,7 +4,7 @@ applications:
     random-route: false
     health-check-type: http
     health-check-http-endpoint: /actuator/health
-    path: ./target/travel-insurance-0.0.1-SNAPSHOT-exec.jar
+    path: ./target/travel-insurance-exec.jar
     stack: cflinuxfs3
     buildpacks:
       - java_buildpack_offline
@@ -17,7 +17,7 @@ applications:
     random-route: false
     health-check-type: http
     health-check-http-endpoint: /actuator/health
-    path: ./target/travel-insurance-0.0.1-SNAPSHOT-exec.jar
+    path: ./target/travel-insurance-exec.jar
     stack: cflinuxfs3
     buildpacks:
       - java_buildpack_offline
@@ -26,7 +26,7 @@ applications:
   - name: api-rapid-dev
     health-check-type: http
     health-check-http-endpoint: /actuator/health
-    path: ./target/travel-insurance-0.0.1-SNAPSHOT-exec.jar
+    path: ./target/travel-insurance-exec.jar
     stack: cflinuxfs3
     buildpacks:
       - java_buildpack_offline
