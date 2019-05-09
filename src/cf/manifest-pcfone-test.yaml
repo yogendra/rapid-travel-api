@@ -1,0 +1,13 @@
+---
+applications:
+  - name: api-rapid
+    random-route: false
+    health-check-type: http
+    health-check-http-endpoint: /actuator/health
+    path: ./target/travel-insurance-exec.jar
+    stack: cflinuxfs3
+    instances: 2
+    buildpacks:
+      - java_buildpack_offline
+    routes:
+      - route: api-rapid-test.apps.pcfone.io
