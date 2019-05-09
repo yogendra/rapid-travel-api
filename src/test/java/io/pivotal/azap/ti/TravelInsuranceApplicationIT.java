@@ -11,6 +11,7 @@ public class TravelInsuranceApplicationIT {
 
   @Test
   public void contextLoads() {
+    // This will ensure that all the config is working
   }
 
 }
