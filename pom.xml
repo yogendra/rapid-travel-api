@@ -153,7 +153,8 @@
 	</build>
 
 	<scm>
-		<url>https://github.com/yogendra/rapid-travel-api.git</url>
+		<url>https://github.com/yogendra/rapid-travel-api</url>
+		<connection>scm:git:https://github.com/yogendra/rapid-travel-api.git</connection>
 	</scm>
 
 	<repositories>
