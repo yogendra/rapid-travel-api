@@ -25,7 +25,7 @@ node {
         /*
         withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
             sh 'cf login -a api.run.pcfone.io -u $CF_USER -p $CF_PASSWORD -s Testing'
-            sh 'cf push api-rapid-test -f manifest-pcfone.yaml -p target/travel-insurance-*-exec.jar'
+            sh 'cf push api-rapid-test -f src/cf/manifest-pcfone-test.yaml -p target/travel-insurance-*-exec.jar'
         }
         */
 
@@ -44,13 +44,13 @@ node {
 
         withCredentials([usernamePassword(credentialsId: 'pcf-pcfone', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
             sh "cf login -a api.run.pcfone.io -u \"$CF_USER\" -p \"$CF_PASSWORD\" -s Production"
-            sh 'cf push api-rapid -f manifest-pcfone.yaml -p target/travel-insurance-*-exec.jar'
+            sh 'cf push api-rapid -f src/cf/manifest-pcfone.yaml -p target/travel-insurance-*-exec.jar'
         }
     }
     stage('Deploy to Prod (Cloud)'){
         withCredentials([usernamePassword(credentialsId: 'pcf-pws', passwordVariable: 'CF_PASSWORD', usernameVariable: 'CF_USER')]) {
             sh "cf login -a api.run.pivotal.io -u \"$CF_USER\" -p \"$CF_PASSWORD\" -s Production"
-            sh 'cf push api-rapid -f manifest-pws.yaml -p target/travel-insurance-*-exec.jar'
+            sh 'cf push api-rapid -f src/cf/manifest-pws.yaml -p target/travel-insurance-*-exec.jar'
         }
 
     }
