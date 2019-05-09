@@ -159,18 +159,18 @@
 	<repositories>
 		<repository>
 			<id>maven-public</id>
-			<url>http://ci.gcp.yogendra.me:18081/repository/maven-public/</url>
+			<url>https://ci.gcp.yogendra.me/nexus/repository/maven-central/</url>
 		</repository>
 	</repositories>
 
 	<distributionManagement>
 		<snapshotRepository>
 			<id>nexus-snapshots</id>
-			<url>http://ci.gcp.yogendra.me:18081/repository/maven-snapshots/</url>
+			<url>https://ci.gcp.yogendra.me/nexus/repository/maven-snapshots/</url>
 		</snapshotRepository>
 		<repository>
 			<id>nexus-releases</id>
-			<url>http://ci.gcp.yogendra.me:18081/repository/maven-releases/</url>
+			<url>https://ci.gcp.yogendra.me/nexus/repository/maven-releases/</url>
 		</repository>
 	</distributionManagement>
 </project>
