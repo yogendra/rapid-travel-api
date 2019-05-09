@@ -3,7 +3,6 @@ package io.pivotal.azap.ti.api;
 import static io.pivotal.azap.ti.Amount.USD;
 import static io.pivotal.azap.ti.PremiumFrequency.ONE_TIME;
 import static io.pivotal.azap.ti.api.Product.ProductType.SPORT_SKI;
-import static io.pivotal.azap.ti.api.Product.builder;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,7 @@ public class ProductConfiguration {
 
   @Bean
   public Product weeklySkiInsurance() {
-    return builder()
+    return Product.builder()
         .code("WSKI001")
         .name("Weekly SKI Insurance by RapidInsure")
         .description(
