@@ -7,7 +7,6 @@ import io.pivotal.azap.ti.PremiumFrequency;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -30,48 +29,31 @@ import lombok.Singular;
 @AllArgsConstructor
 public class PolicyContract {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  @SequenceGenerator(name="hourly_policy_id", sequenceName = "hourly_policy_id_seq", allocationSize = 1)
-  private Long id;
   @ManyToOne
   Customer customer;
-
+  @OneToMany
+  @Singular
+  @JsonManagedReference
+  List<PolicyContractDetail> details;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @SequenceGenerator(name = "hourly_policy_id", sequenceName = "hourly_policy_id_seq", allocationSize = 1)
+  private Long id;
   private LocalDateTime coverStart;
   private LocalDateTime coverEnd;
   private String accountNumber;
   private String productCode;
   @Embedded
-  @AttributeOverrides(
-      {
-          @AttributeOverride(name="amount", column = @Column(name="coverage_amount")),
-          @AttributeOverride(name="currency", column = @Column(name="coverage_currency"))
-      }
-
-  )
+  @AttributeOverride(name = "number", column = @Column(name = "coverage_amount"))
+  @AttributeOverride(name = "currency", column = @Column(name = "coverage_currency"))
   private Amount coverage;
-
   @Embedded
-  @AttributeOverrides(
-      {
-          @AttributeOverride(name="amount", column = @Column(name="premium_amount")),
-          @AttributeOverride(name="currency", column = @Column(name="premium_currency"))
-      }
-
-  )
+  @AttributeOverride(name = "number", column = @Column(name = "premium_amount"))
+  @AttributeOverride(name = "currency", column = @Column(name = "premium_currency"))
   private Amount premium;
   private PremiumFrequency premiumFrequency;
   private String paymentReference;
   private PolicyStatus status;
-
-
-
-
-
-  @OneToMany
-  @Singular
-  @JsonManagedReference
-  List<PolicyContractDetail> details;
 
 
 }

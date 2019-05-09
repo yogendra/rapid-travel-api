@@ -5,7 +5,6 @@ import io.pivotal.azap.ti.PolicyStatus;
 import io.pivotal.azap.ti.PremiumFrequency;
 import java.time.LocalDateTime;
 import java.util.Map;
-import javax.persistence.Embedded;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

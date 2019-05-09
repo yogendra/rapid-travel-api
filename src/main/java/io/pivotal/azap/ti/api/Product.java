@@ -24,6 +24,7 @@ import lombok.Singular;
 @Data
 @Builder
 public class Product {
+
   @NonNull
   private String code;
 
@@ -46,7 +47,7 @@ public class Product {
   @Default
   private String smallBanner = "banner-small.jpg";
   @Default
-  private String mediumBanner =  "banner-medium.jpg";
+  private String mediumBanner = "banner-medium.jpg";
   @Default
   private String largeBanner = "banner-large.jpg";
 
@@ -59,6 +60,10 @@ public class Product {
     TEXT, DATE, TIME, DATETIME, NUMBER
   }
 
+
+  enum ProductType {
+    GENERAL, LIFE, TRAVEL, SPORT_SKI
+  }
 
   @Data
   @NoArgsConstructor
@@ -127,10 +132,6 @@ public class Product {
           .type(type)
           .build();
     }
-  }
-
-  enum ProductType {
-    GENERAL, LIFE, TRAVEL, SPORT_SKI
   }
 
 }

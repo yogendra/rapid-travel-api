@@ -24,16 +24,16 @@ public class CustomerApi {
   }
 
   @GetMapping("/{id}")
-  public Customer get(@PathVariable Long id){
+  public Customer get(@PathVariable Long id) {
     Optional<io.pivotal.azap.ti.db.Customer> dbCustomer = customers.findById(id);
-    if(dbCustomer.isPresent()){
+    if (dbCustomer.isPresent()) {
       return mapperFacade.map(dbCustomer, Customer.class);
     }
     return null;
   }
 
-  @GetMapping({"","/"})
-  public List<Customer> getAll(){
+  @GetMapping({"", "/"})
+  public List<Customer> getAll() {
     return mapperFacade.mapAsList(customers.findAll(), Customer.class);
   }
 }

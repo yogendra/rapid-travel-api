@@ -22,7 +22,7 @@ public class Customer {
 
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  @SequenceGenerator(name="customer_id",sequenceName="customer_seq", allocationSize=1)
+  @SequenceGenerator(name = "customer_id", sequenceName = "customer_seq", allocationSize = 1)
   private Long id;
 
   @Column(nullable = false, length = 100)
@@ -34,7 +34,6 @@ public class Customer {
 
   @OneToMany
   private List<PolicyContract> policies;
-
 
 
 }

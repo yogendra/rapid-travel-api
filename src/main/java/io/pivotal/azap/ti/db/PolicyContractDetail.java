@@ -34,11 +34,12 @@ public class PolicyContractDetail {
   public static List<PolicyContractDetail> fromMap(PolicyContract contract,
       Map<String, String> map) {
     if (map != null) {
-      return map.entrySet().stream().map(s -> {
-        return new PolicyContractDetail(null, contract, s.getKey(), s.getValue());
-      }).collect(toList());
+      return map.entrySet()
+          .stream()
+          .map(s -> new PolicyContractDetail(null, contract, s.getKey(), s.getValue()))
+          .collect(toList());
     } else {
-      return Collections.EMPTY_LIST;
+      return Collections.emptyList();
     }
 
   }

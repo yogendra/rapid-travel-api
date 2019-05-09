@@ -8,11 +8,11 @@ import io.pivotal.azap.ti.db.Customer;
 import io.pivotal.azap.ti.db.CustomerRepository;
 import io.pivotal.azap.ti.db.PolicyContract;
 import io.pivotal.azap.ti.db.PolicyContractRepository;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,19 +27,16 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class PolicyApi {
 
-  private MapperFacade mapperFacade;
-
   private PolicyContractRepository contracts;
   private CustomerRepository customers;
   private List<Product> products;
 
 
   @Autowired
-  public PolicyApi(MapperFacade mapperFacade,
+  public PolicyApi(
       PolicyContractRepository policyContractRepository,
       CustomerRepository customers,
       List<Product> products) {
-    this.mapperFacade = mapperFacade;
     this.contracts = policyContractRepository;
     this.customers = customers;
     this.products = products;
@@ -48,35 +45,40 @@ public class PolicyApi {
   @GetMapping("/{id}")
   public Policy get(@PathVariable("id") Long id) {
 
-    return contracts.findById(id).map(x -> {
-      return Policy.builder()
-          .id(id)
-          .coverage(x.getCoverage())
-          .coverageEnd(x.getCoverEnd())
-          .coverageStart(x.getCoverStart())
-          .name(getProduct(x.getProductCode()).getName())
-          .premium(x.getPremium())
-          .premiumFrequency(x.getPremiumFrequency())
-          .customerName(x.getCustomer().getName())
-          .customerEmail(x.getCustomer().getEmail())
-          .customerPhoneNumber(x.getCustomer().getPhoneNumber())
-          .productCode(x.getProductCode())
-          .status(x.getStatus())
-          .transactionReference(x.getPaymentReference())
-          .build();
-
-    }).orElse(null);
+    return contracts.findById(id)
+        .map(x -> Policy.builder()
+            .id(id)
+            .coverage(x.getCoverage())
+            .coverageEnd(x.getCoverEnd())
+            .coverageStart(x.getCoverStart())
+            .name(getProduct(x.getProductCode()).getName())
+            .premium(x.getPremium())
+            .premiumFrequency(x.getPremiumFrequency())
+            .customerName(x.getCustomer()
+                .getName())
+            .customerEmail(x.getCustomer()
+                .getEmail())
+            .customerPhoneNumber(x.getCustomer()
+                .getPhoneNumber())
+            .productCode(x.getProductCode())
+            .status(x.getStatus())
+            .transactionReference(x.getPaymentReference())
+            .build())
+        .orElse(null);
 
   }
 
   private Product getProduct(String productCode) {
-    return this.products.stream().filter(x -> x.getCode().equalsIgnoreCase(productCode)).findFirst()
+    return this.products.stream()
+        .filter(x -> x.getCode()
+            .equalsIgnoreCase(productCode))
+        .findFirst()
         .orElse(null);
   }
 
   @GetMapping(value = "/", params = {"customer"})
   public List<Policy> getAllForCustomer(@RequestParam("customer") String customer) {
-    return null;
+    return Collections.emptyList();
   }
 
 
@@ -94,18 +96,20 @@ public class PolicyApi {
 
   private boolean isValidProposal(Policy policy) {
 
-    boolean valid = true;
-    valid = valid && isValidProduct(policy.getProductCode());
+    boolean valid = isValidProduct(policy.getProductCode());
     valid = valid && hasValidPayment(policy);
     return valid;
   }
 
   private boolean hasValidPayment(Policy policy) {
-    return true;
+    return policy.getPremium() != null && policy.getPremium()
+        .getNumber() > 0.0;
   }
 
   private boolean isValidProduct(String productCode) {
-    return products.stream().map(Product::getCode).anyMatch(productCode::equalsIgnoreCase);
+    return products.stream()
+        .map(Product::getCode)
+        .anyMatch(productCode::equalsIgnoreCase);
   }
 
 

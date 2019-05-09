@@ -28,7 +28,10 @@ public class ProductApi {
 
   @GetMapping("/{code}")
   public Optional<Product> get(@PathVariable("code") String code) {
-    return products.stream().filter(x -> x.getCode().equals(code)).findFirst();
+    return products.stream()
+        .filter(x -> x.getCode()
+            .equals(code))
+        .findFirst();
   }
 
   @GetMapping({"/", ""})
@@ -38,12 +41,14 @@ public class ProductApi {
     return products;
   }
 
-  @GetMapping(value = {"","/"},
+  @GetMapping(value = {"", "/"},
       params = {"type"})
   public List<Product> getAllByType(@RequestParam("type") String type) {
     log.info("Received request for {} insurance products", type);
     ProductType requiredType = ProductType.valueOf(type.toUpperCase());
-    return products.stream().filter(x -> x.getType() == requiredType).collect(toList());
+    return products.stream()
+        .filter(x -> x.getType() == requiredType)
+        .collect(toList());
   }
 
 
