@@ -21,7 +21,7 @@ public class ProductConfigurationTest {
   @Test
   public void checkProducts() {
 
-    String[] expectedProductCodes = {"WSKI001"};
+    String[] expectedProductCodes = {"WSKI001","HSKI001"};
 
     String[] actual = products.stream()
         .map(Product::getCode)
